@@ -1,6 +1,8 @@
 package com.pawelk.javadev;
 
+import com.pawelk.javadev.models.Activity;
 import com.pawelk.javadev.models.User;
+import com.pawelk.javadev.repositories.ActivityRepository;
 import com.pawelk.javadev.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +22,14 @@ public class JavadevApplication {
 	private static final Logger log = LoggerFactory.getLogger(JavadevApplication.class);
 
 //	@Bean
-//	public CommandLineRunner demo(UserRepository repository) {
+//	public CommandLineRunner demo(ActivityRepository repository) {
 //			return (args) -> {
-//				repository.save(new User("admin", "admin"));
+//				log.info("Activity found with findAll():");
+//			log.info("-------------------------------");
+//			for (Activity activity : repository.findAll()) {
+//				log.info(activity.toString());
+//			}
+//			log.info("");
 //			};
 //	}
 

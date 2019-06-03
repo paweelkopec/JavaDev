@@ -11,9 +11,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @NotEmpty
     @Column(nullable = false, unique = true)
     private String username;
+
     @NotEmpty
     private String password;
 
