@@ -1,11 +1,8 @@
 package com.pawelk.javadev.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 public class Presence {
@@ -16,6 +13,7 @@ public class Presence {
 
     @ManyToOne
     @JoinColumn(name = "activity_id", nullable = false)
+    @JsonIgnore
     private Activity activity;
 
     @ManyToOne

@@ -29,7 +29,7 @@ public class CustomUserDetailsService implements org.springframework.security.co
 
     @Override
     public UserDetails loadUserByUsername(final String username) {
-        final User user = userRepository.findByUsername(username);
+        final User user = userRepository.findByEmail(username);
         if (user== null) {
             throw new UsernameNotFoundException(username);
         }

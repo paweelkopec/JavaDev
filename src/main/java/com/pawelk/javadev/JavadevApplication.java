@@ -1,15 +1,9 @@
 package com.pawelk.javadev;
 
-import com.pawelk.javadev.models.Activity;
-import com.pawelk.javadev.models.User;
-import com.pawelk.javadev.repositories.ActivityRepository;
-import com.pawelk.javadev.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class JavadevApplication {

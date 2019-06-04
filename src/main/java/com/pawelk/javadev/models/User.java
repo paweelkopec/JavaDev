@@ -16,27 +16,34 @@ public class User {
     private Long id;
 
     @NotEmpty
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(nullable = false)
+    private String firstname;
 
     @NotEmpty
-    @JsonIgnore
+    @Column(nullable = false)
+    private String lastname;
+
+    @NotEmpty
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @NotEmpty
     private String password;
+
+    @Column
+    private String studyDirection;
+
+    @Column
+    private String index;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Collection<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Presence> presences;
-
-    protected User() {}
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 
     public Long getId() {
         return id;
@@ -46,12 +53,28 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -62,13 +85,35 @@ public class User {
         this.password = password;
     }
 
+    public String getStudyDirection() {
+        return studyDirection;
+    }
+
+    public void setStudyDirection(String studyDirection) {
+        this.studyDirection = studyDirection;
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
 
     public Collection<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(final Collection<Role> roles) {
+    public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
 
+    public List<Presence> getPresences() {
+        return presences;
+    }
+
+    public void setPresences(List<Presence> presences) {
+        this.presences = presences;
+    }
 }

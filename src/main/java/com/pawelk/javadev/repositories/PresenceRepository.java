@@ -11,4 +11,7 @@ public interface PresenceRepository extends JpaRepository<Presence, Long> {
 
     List<Presence> findByActivityId(Long activityId);
 
+//    @Query("select count(id) from presence where activity_id=?1 and user_id=?1")
+//    Long countByActivityIdAndUserId(Long activityId, Long userId);
+
 }
