@@ -1,15 +1,19 @@
 package com.pawelk.javadev.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty
@@ -23,6 +27,10 @@ public class Activity {
 
     @Basic
     private Date dateTime;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Presence> presences;
 
     public Long getId() {
         return id;
@@ -62,6 +70,14 @@ public class Activity {
 
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public List<Presence> getPresences() {
+        return presences;
+    }
+
+    public void setPresences(List<Presence> presences) {
+        this.presences = presences;
     }
 
     @Override
