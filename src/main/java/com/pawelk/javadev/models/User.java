@@ -36,9 +36,12 @@ public class User {
     @Column
     private String index;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
     private Collection<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

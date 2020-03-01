@@ -1,9 +1,18 @@
 package com.pawelk.javadev;
 
+import com.pawelk.javadev.models.Role;
+import com.pawelk.javadev.models.User;
+import com.pawelk.javadev.repositories.RoleRepository;
+import com.pawelk.javadev.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 public class JavadevApplication {
@@ -15,55 +24,53 @@ public class JavadevApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(JavadevApplication.class);
 
-//	@Bean
-//	public CommandLineRunner demo(ActivityRepository repository) {
-//			return (args) -> {
-//				log.info("Activity found with findAll():");
-//			log.info("-------------------------------");
-//			for (Activity activity : repository.findAll()) {
-//				log.info(activity.toString());
-//			}
-//			log.info("");
-//			};
-//	}
-
-//	@Bean
-//	public CommandLineRunner demo(CustomerRepository repository) {
-//		return (args) -> {
-//			// save a couple of customers
-//			repository.save(new Customer("Jack", "Bauer"));
-//			repository.save(new Customer("Chloe", "O'Brian"));
-//			repository.save(new Customer("Kim", "Bauer"));
-//			repository.save(new Customer("David", "Palmer"));
-//			repository.save(new Customer("Michelle", "Dessler"));
-//
-//			// fetch all customers
-//			log.info("Customers found with findAll():");
-//			log.info("-------------------------------");
-//			for (Customer customer : repository.findAll()) {
-//				log.info(customer.toString());
-//			}
-//			log.info("");
-//
-//			// fetch an individual customer by ID
-//			repository.findById(1L)
-//					.ifPresent(customer -> {
-//						log.info("Customer found with findById(1L):");
-//						log.info("--------------------------------");
-//						log.info(customer.toString());
-//						log.info("");
-//					});
-//
-//			// fetch customers by last name
-//			log.info("Customer found with findByLastName('Bauer'):");
-//			log.info("--------------------------------------------");
-//			repository.findByLastName("Bauer").forEach(bauer -> {
-//				log.info(bauer.toString());
-//			});
-//			// for (Customer bauer : repository.findByLastName("Bauer")) {
-//			// 	log.info(bauer.toString());
-//			// }
-//			log.info("");
-//		};
-//	}
+	@Bean
+	public CommandLineRunner defaultUser(UserRepository userRepository, RoleRepository roleRepository) {
+			return (args) -> {
+                //admin role
+                if(roleRepository.countByName("ROLE_ADMIN")==0){
+                    log.info("Create default role admin");
+                        Role role = new Role();
+                        role.setName("ROLE_ADMIN");
+                        roleRepository.save(role);
+                        log.info("-------------------------------");
+                }
+                Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+                //user role
+                if(roleRepository.countByName("ROLE_USER")==0){
+                    log.info("Create default role user");
+                    Role role = new Role();
+                    role.setName("ROLE_USER");
+                    roleRepository.save(role);
+                    log.info("-------------------------------");
+                }
+                Role userRole = roleRepository.findByName("ROLE_USER");
+                //create users
+                BCryptPasswordEncoder encoder = new  BCryptPasswordEncoder();
+                //ADMIN
+			    if(userRepository.countByEmail("admin")==0){
+                    log.info("Create default admin");
+                    User user = new User();
+                    user.setFirstname("admin");
+                    user.setLastname("Admin");
+                    user.setEmail("admin");
+                    user.setPassword(encoder.encode("admin"));
+                    user.setRoles(Arrays.asList(adminRole));
+                    userRepository.save(user);
+                    log.info("-------------------------------");
+                }
+			    //USER
+                if(userRepository.countByEmail("user")==0){
+                    log.info("Create defaul user");
+                    User user = new User();
+                    user.setFirstname("user");
+                    user.setLastname("User");
+                    user.setEmail("user");
+                    user.setPassword(encoder.encode("user"));
+                    user.setRoles(Arrays.asList(userRole));
+                    userRepository.save(user);
+                    log.info("-------------------------------");
+                }
+			};
+	}
 }
