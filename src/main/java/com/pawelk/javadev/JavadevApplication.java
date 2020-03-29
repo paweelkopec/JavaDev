@@ -24,7 +24,7 @@ public class JavadevApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(JavadevApplication.class);
 
-	@Bean
+//	@Bean
 	public CommandLineRunner defaultUser(UserRepository userRepository, RoleRepository roleRepository) {
 			return (args) -> {
                 //admin role
